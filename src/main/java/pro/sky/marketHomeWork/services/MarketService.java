@@ -1,9 +1,11 @@
 package pro.sky.marketHomeWork.services;
 
-import java.util.Map;
+import java.util.List;
 
 public interface MarketService {
-    void addProduct(Integer id, String name);
+//    void addProduct(Integer id);
 
-    Map<Integer, String> getBasket();
+    void addProduct(List<Integer> id);
+
+    List<Integer> getBasket();
 }
