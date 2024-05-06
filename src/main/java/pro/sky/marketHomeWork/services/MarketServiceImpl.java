@@ -14,11 +14,6 @@ public class MarketServiceImpl implements MarketService{
         this.basket = basket;
     }
 
-    /*@Override
-    public void addProduct(Integer id) {
-        basket.addProduct(id);
-    }*/
-
     @Override
     public void addProduct(List<Integer> id) {
         basket.addProduct(id);

@@ -15,10 +15,6 @@ public class Basket {
         this.basketList = new ArrayList<Integer>();
     }
 
-    /*public void addProduct(Integer id) {
-        basketList.add(id);
-    }*/
-
     public void addProduct(List<Integer> id) {
         basketList.addAll(id);
     }
