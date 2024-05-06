@@ -1,12 +1,13 @@
 package pro.sky.marketHomeWork.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import pro.sky.marketHomeWork.exceptions.BasketIsEmptyException;
 import pro.sky.marketHomeWork.services.MarketService;
 
-import java.util.Map;
+import java.util.List;
 
 @RestController
 @RequestMapping("/market")
@@ -17,15 +18,26 @@ public class MarketController {
         this.marketService = marketService;
     }
 
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<String> handleTypeMismatch(MethodArgumentTypeMismatchException e) {
+        String error = "Неверный тип введённых данных!";
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
     @GetMapping(path = "/add")
-    public String addProduct(@RequestParam("id") Integer id,
-                             @RequestParam("name") String name) {
-        marketService.addProduct(id, name);
-        return "Сотрудник добавлен!";
+    public String addProduct(@RequestParam("id") List<Integer> id) {
+            marketService.addProduct(id);
+            return "Продукт добавлен!";
     }
 
     @GetMapping(path = "/get")
-    public Map<Integer, String> getBasket() {
-        return marketService.getBasket();
+    public List<Integer> getBasket() {
+        try {
+            return marketService.getBasket();
+        }
+        catch (BasketIsEmptyException e) {
+            System.out.println("Корзина пуста!");
+            throw new BasketIsEmptyException();
+        }
     }
 }

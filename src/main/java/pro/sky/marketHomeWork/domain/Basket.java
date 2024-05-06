@@ -1,23 +1,25 @@
 package pro.sky.marketHomeWork.domain;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-@Repository
+@Component
+@SessionScope
 public class Basket {
-    private final Map<Integer, String> basketMap;
+    private final ArrayList<Integer> basketList;
 
     public Basket() {
-        this.basketMap = new HashMap<>();
+        this.basketList = new ArrayList<Integer>();
     }
 
-    public void addProduct(Integer id, String name) {
-        basketMap.put(id, name);
+    public void addProduct(List<Integer> id) {
+        basketList.addAll(id);
     }
 
-    public Map<Integer, String> getBasketMap() {
-        return basketMap;
+    public List<Integer> getBasketList() {
+        return basketList;
     }
 }
